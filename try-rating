@@ -1,0 +1,106 @@
+<html>
+    <body>
+        <textarea rows="50" cols="50" autofocus></textarea>
+        <script>
+
+            let name_comments = [
+                "Incorrect classification ("
+                , "Incorrect name "
+            ];
+
+            let pin_comments = [
+                "Street imagery could not verify the pin's location."
+                , "There is no street imagery to verify the pin's location."
+                , "There is no sign of the business/POI existence."
+            ];
+
+            let rate_specific_comments = [
+                "User is looking for a specific sub-location. Result is a random POI within/near the sub-location and it does not meet the criteria of being the user's secondary intent."
+                , "User is looking for a specific street. Result is a random POI within/near the street and it does not meet the criteria of being the user's secondary intent."
+                , "User is looking for a specific full address. Result is a random POI and it does not meet the criteria of being the user's secondary intent."
+            ];
+
+            let rate_specific_alt_comments = [
+                "User is looking for a specific "
+            ];
+
+            let count_desc_specific = 0;
+            let timer_desc_specific = null;
+            let count_desc_specific_alt = 0;
+            let timer_desc_specific_alt = null;
+            let count_desc_pin = 0;
+            let timer_desc_pin = null;
+            let count_desc_name = 0;
+            let timer_desc_name = null;
+            let timer_seconds = 300;
+
+            document.onkeydown = function(event){
+                event = event || window.event;
+                // ALT + C
+                if(event.altKey && event.keyCode == 67){
+                    // alert('alert key pressed');
+                    count_desc_pin++;
+                }
+                pin_comments.forEach((element, index) => {
+                    if(index+1 == count_desc_pin){
+                        clearTimeout(timer_desc_pin);
+                        timer_desc_pin = setTimeout(function(){
+                            let activeElement = document.activeElement;
+                            activeElement.value = activeElement.value + element;
+                            count_desc_pin = 0;
+                        }, timer_seconds);
+                    }
+                });
+
+                // ALT + Z        
+                if(event.altKey && event.keyCode == 90){
+                    // ALT + SHIFT + Z 
+                    if(event.shiftKey){
+                        count_desc_specific_alt++;
+                        count_desc_specific = 0;
+                    }
+                    else{
+                        count_desc_specific++;
+                        count_desc_specific_alt = 0;
+                    }
+                }                
+                rate_specific_comments.forEach((element, index) => {
+                    if(index+1 == count_desc_specific){
+                        clearTimeout(timer_desc_specific);
+                        timer_desc_specific = setTimeout(function(){
+                            let activeElement = document.activeElement;
+                            activeElement.value = activeElement.value + element;
+                            count_desc_specific = 0;
+                        }, timer_seconds);
+                    }
+                });            
+                    
+                rate_specific_alt_comments.forEach((element, index) => {
+                    if(index+1 == count_desc_specific_alt){
+                        clearTimeout(timer_desc_specific_alt);
+                        timer_desc_specific_alt = setTimeout(function(){
+                            let activeElement = document.activeElement;
+                            activeElement.value = activeElement.value + element;
+                            count_desc_specific_alt = 0;
+                        }, timer_seconds);
+                    }
+                });            
+
+                // ALT + S       
+                if(event.altKey && event.keyCode == 83){
+                    count_desc_name++;       
+                }                
+                name_comments.forEach((element, index) => {
+                    if(index+1 == count_desc_name){
+                        clearTimeout(timer_desc_name);
+                        timer_desc_name = setTimeout(function(){
+                            let activeElement = document.activeElement;
+                            activeElement.value = activeElement.value + element;
+                            count_desc_name = 0;
+                        }, timer_seconds);
+                    }
+                });            
+            }
+        </script>
+    </body>
+</html>
