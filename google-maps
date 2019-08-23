@@ -1,0 +1,91 @@
+<html>
+    <body>
+        <button class="link-like widget-reveal-card-lat-lng">
+            3.142
+        </button>
+        <script>            
+            let mutationObserver = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if(mutation.type === 'childList'){
+                        // console.log(mutation.target);
+                        if(mutation.target.className === 'widget-reveal-card widget-reveal-card-open'){
+                            // console.log(mutation.target.className);                            
+                            let lat_lng_btn = document.getElementsByClassName("link-like widget-reveal-card-lat-lng")[0];
+                            lat_lng_btn.onclick = function(){
+                                let text = lat_lng_btn.textContent;
+                                
+                                let textarea = document.createElement("textarea");
+                                textarea.innerHTML = "The correct pin (" + text + ")";
+                                lat_lng_btn.appendChild(textarea); 
+
+                                textarea.select();
+                                document.execCommand('copy');
+                                console.log('Copied ' + text + ' to clipboard.');
+
+                                document.getElementById('searchboxinput').focus();
+                            }                      
+                        }
+                    }
+                });
+            });            
+
+            let reveal_card = document.getElementById('reveal-card');
+            mutationObserver.observe(reveal_card, {
+                childList: true,
+                subtree: true,
+            });
+
+            let share_btn = null;
+            let mutationObserverPane = new MutationObserver(function(mutations){
+                mutations.forEach(function(mutation){
+                    // console.log(mutation);
+                    if(mutation.target.className === 'widget-pane-content-holder'){
+                        // console.log(mutation.target.className);
+                        let action_btns = document.getElementsByClassName("iRxY3GoUYUY__button");
+                        // console.log(action_btns);        
+                        for (let action_btn of action_btns) {
+                            if(action_btn.getAttribute('data-value') == 'Share'){
+                                console.log("Set share button");                                
+                                share_btn = action_btn;
+                            }
+                        }     
+                    }
+                });
+            });
+
+            let pane = document.getElementById('pane');
+            mutationObserverPane.observe(pane, {
+                childList: true,
+                subtree: true,
+            });
+
+            document.body.onkeydown = function(event){
+                event = event || window.event;
+                // ALT + S
+                if(event.altKey && event.keyCode == 83){
+                    share_btn.click();
+                    console.log("Share");
+
+                    let mutationObserverModalDialog = new MutationObserver(function(mutations){
+                        mutations.forEach(function(mutation, index){
+                            if(mutation.target.className === 'modal-dialog'){
+                                console.log("Index " + index + ": " + mutation)
+                                setTimeout(function(){
+                                    let copy_link_btn = document.getElementsByClassName('section-copy-link-copy-button')[0];
+                                    copy_link_btn.click();
+                                    console.log("Copied");
+                                    mutationObserverModalDialog.disconnect();
+                                }, 500);
+                            }
+                        });
+                    });
+                    let modal_dialog = document.getElementById('modal-dialog');
+                    mutationObserverModalDialog.observe(modal_dialog, {
+                        childList: true,
+                        subtree: true,
+                    });                    
+                }
+            }
+        </script>
+    </body>
+</html>
