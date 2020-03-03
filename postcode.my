@@ -1,0 +1,2 @@
+document.getElementById('keyword').focus();
+document.getElementById('map_search').style.display = 'none';
