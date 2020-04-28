@@ -9,9 +9,15 @@
             ];
 
             let pin_comments = [
-                "Street imagery could not verify the pin's location."
-                , "There is no street imagery to verify the pin's location."
+                "The correct pin ("
                 , "There is no sign of the business/POI existence."
+                , "There is no street imagery to verify the pin's location."
+                , "Street imagery could not verify the pin's location."
+            ];
+
+            let addr_comments = [
+                "Address: "
+                , "The result is irrelevant to the query."
             ];
 
             let rate_specific_comments = [
@@ -32,6 +38,8 @@
             let timer_desc_pin = null;
             let count_desc_name = 0;
             let timer_desc_name = null;
+            let count_desc_addr = 0;
+            let timer_desc_addr = null;
             let timer_seconds = 300;
 
             document.onkeydown = function(event){
@@ -48,6 +56,22 @@
                             let activeElement = document.activeElement;
                             activeElement.value = activeElement.value + element;
                             count_desc_pin = 0;
+                        }, timer_seconds);
+                    }
+                });
+
+                // ALT + V
+                if(event.altKey && event.keyCode == 86){
+                    // alert('alert key pressed');
+                    count_desc_addr++;
+                }
+                addr_comments.forEach((element, index) => {
+                    if(index+1 == count_desc_addr){
+                        clearTimeout(timer_desc_addr);
+                        timer_desc_addr = setTimeout(function(){
+                            let activeElement = document.activeElement;
+                            activeElement.value = activeElement.value + element;
+                            count_desc_addr = 0;
                         }, timer_seconds);
                     }
                 });
