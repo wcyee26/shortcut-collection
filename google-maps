@@ -12,10 +12,11 @@
                             // console.log(mutation.target.className);                            
                             let lat_lng_btn = document.getElementsByClassName("link-like widget-reveal-card-lat-lng")[0];
                             lat_lng_btn.onclick = function(){
+                                // Get the pin value
                                 let text = lat_lng_btn.textContent;
                                 
                                 let textarea = document.createElement("textarea");
-                                textarea.innerHTML = "The correct pin (" + text + ")";
+                                textarea.innerHTML = text;
                                 lat_lng_btn.appendChild(textarea); 
 
                                 textarea.select();
