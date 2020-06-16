@@ -18,16 +18,17 @@
             let addr_comments = [
                 "Address: "
                 , "The result is irrelevant to the query."
+                , "is.gd/CVDMMa" // REF for Aplikasi Cari Kod
             ];
 
             let rate_specific_comments = [
                 "User is looking for a specific sub-location. Result is a random POI within/near the sub-location and it does not meet the criteria of being the user's secondary intent."
-                , "User is looking for a specific street. Result is a random POI within/near the street and it does not meet the criteria of being the user's secondary intent."
-                , "User is looking for a specific full address. Result is a random POI and it does not meet the criteria of being the user's secondary intent."
+                , "Unreasonable because the query address is too large."
             ];
 
             let rate_specific_alt_comments = [
                 "User is looking for a specific "
+                , "The query address is a unique address."                
             ];
 
             let count_desc_specific = 0;
